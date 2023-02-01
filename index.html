@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <style type="text/css">
+    header{
+      width: 80%;
+      margin: auto;
+      margin-top: 10px;
+    }
+    .card{
+      display: inline-block;
+      margin: 30px;
+    }
+  </style>
+  </head>
+  <body>
+    <header>
+      <select id = "sel" class="form-select" aria-label="Default select example" onchange="getVal()">
+  <option selected >Select Country </option>
+  <option id ='val1' value="india">India</option>
+  <option id="val2" value="Australia">Australia</option>
+  <option id="val3" value="china">China</option>
+</select>
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body text-bg-primary">
+    <h5 class="card-title">New Case</h5>
+    <p class="card-text" id= "card1">VT website shows here New Cases Data when you select a country. </p>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body text-bg-success">
+    <h5 class="card-title">Total Case</h5>
+    <p class="card-text" id= "card2">VT website shows here Total Cases Data when you select a country. </p>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body text-bg-danger">
+    <h5 class="card-title">Total Deaths</h5>
+    <p class="card-text" id= "card3">VT website shows here Total Deaths Data when you select a country.</p>
+  </div>
+</div>
+    </header>
+
+
+    <script type="text/javascript">
+      const fapijson = fetch('https://api.covid19api.com/summary').then((apiData)=>{
+      // console.log(apiData);
+      return apiData.json();
+     });
+
+// Australia
+function getVal() {
+  fapijson.then((apijson)=>{
+if(document.getElementById('sel').value=="Australia"){
+      document.getElementById("card1").innerHTML = apijson.Countries[9].NewConfirmed;
+      document.getElementById("card2").innerHTML= apijson.Countries[9].TotalConfirmed;
+      document.getElementById("card3").innerHTML= apijson.Countries[9].TotalDeaths;
+}else if(document.getElementById('sel').value == "china"){
+
+      document.getElementById("card1").innerHTML = apijson.Countries[36].NewConfirmed;
+      document.getElementById("card2").innerHTML= apijson.Countries[36].TotalConfirmed;
+      document.getElementById("card3").innerHTML= apijson.Countries[36].TotalDeaths;
+}
+else if(document.getElementById('sel').value == "india"){     
+// india
+      document.getElementById("card1").innerHTML = apijson.Countries[77].NewConfirmed;
+      document.getElementById("card2").innerHTML= apijson.Countries[77].TotalConfirmed;
+      document.getElementById("card3").innerHTML= apijson.Countries[77].TotalDeaths;
+
+
+}else{
+      document.getElementById("card1").innerHTML = " " ;
+      document.getElementById("card2").innerHTML= " ";
+      document.getElementById("card3").innerHTML= " ";
+}
+});
+};
+
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </body>
+</html>
